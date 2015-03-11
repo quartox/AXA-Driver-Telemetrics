@@ -43,6 +43,7 @@ def derivatives(x5,y5):
     return( accel, jerk )
 
 def distances_and_derivs(trip,x,y):
+    """Computes the distance and derivatives (i.e. velocity, acceleration, jerk) based on the position data for each trip."""
     num_seconds = len(x)
     trip.total_time = num_seconds
     for ii in range(1,num_seconds):
@@ -70,10 +71,9 @@ def distances_and_derivs(trip,x,y):
             if trip.max_jerk is None or trip.max_jerk < jerk:
                 trip.max_jerk = jerk
 
-def computeFeatures():
+def computeFeatures(drivers):
     """Computes the features from the driver telemetric data."""
 #if __name__ == "__main__":
-    drivers = readData()
     features = list()
     for driver in drivers:
         driver_features = list()
