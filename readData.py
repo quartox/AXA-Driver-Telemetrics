@@ -36,22 +36,11 @@ if __name__ == "__main__":
         print len(driver.x),len(driver.y)
         exit()
 
-def numberOfDrivers():
-    directory_names = list(glob.glob(os.path.join(DATA_PATH,"driver-telemetrics/","*")))
-    return len(directory_names)
-
-def readData():
-    """Find all of the folders that represent all of the drivers in the data set."""
+def allDrivers():
     filepath = os.path.join(DATA_PATH,"driver-telemetrics/","*")
     directory_names = list(glob.glob(filepath))
     num_drivers = len(directory_names)
-    num_chars = len(filepath)-1 # the number of characters before the wildcard
-    drivers = list()
-    for folder in directory_names:
-        current_driver = Driver(int(folder[num_chars:]))
-        (current_driver.x,current_driver.y) = readDriver(folder)
-        drivers.append(current_driver)
-    return drivers
+    return (num_drivers,directory_names)
 
 def readDriver(folder):
     """Read data for a single driver."""
@@ -70,3 +59,31 @@ def readDriver(folder):
         allx.append(x)
         ally.append(y)
     return (allx,ally)
+
+def readData(index,directory_names):
+    """Find all of the folders that represent all of the drivers in the data set."""
+    filepath = os.path.join(DATA_PATH,"driver-telemetrics/")
+    num_chars = len(filepath) # the number of characters before the wildcard
+    drivers = list()
+    folder = directory_names[index]
+    current_driver = Driver(int(folder[num_chars:]))
+    (current_driver.x,current_driver.y) = readDriver(folder)
+    drivers.append(current_driver)
+    return drivers
+
+def readNegativeExamples(directory_names,finaldrivers):
+    """Find all of the folders that represent all of the drivers in the data set."""
+    filepath = os.path.join(DATA_PATH,"driver-telemetrics/")
+    num_drivers = len(directory_names)
+    num_chars = len(filepath) # the number of characters before the wildcard
+    drivers = list()
+    if finaldrivers:
+        iirange = range(5)
+    else:
+        iirange = range(num_drivers-5,num_drivers)
+    for ii in iirange:
+        folder = directory_names[ii]
+        current_driver = Driver(int(folder[num_chars:]))
+        (current_driver.x,current_driver.y) = readDriver(folder)
+        drivers.append(current_driver)
+    return drivers
