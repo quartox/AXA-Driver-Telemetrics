@@ -9,6 +9,7 @@ from readData import readData
 class Features:
     def __init__(self,id):
         self.id = id
+        self.nfeatures = 9
         # initializing the features for the classification
         self.max_separation = None
         self.final_distance = 0.0
